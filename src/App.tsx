@@ -26,6 +26,7 @@
 // export default App;
 
 import { Todo } from "./component/Todo";
+import { TodoCard } from "./component/atoms/TodoCard";
 
 function App(){
   const todoSample = {
@@ -41,6 +42,7 @@ function App(){
   return (
     <div>
       <Todo id={todoSample.id} text={todoSample.text} onDelete={handleDelete} />
+      <TodoCard />
     </div>
   );
 }

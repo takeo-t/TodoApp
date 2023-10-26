@@ -1,8 +1,7 @@
 import { Card, CardHeader, CardBody, Heading, Stack, StackDivider, Box, Text } from '@chakra-ui/react'
 
 export const TodoCard = () => {
-    return
-    (
+    return (
         <>
         <Card>
   <CardHeader>
