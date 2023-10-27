@@ -1,4 +1,5 @@
 import React from "react"
+import { FC, useState } from "react";
 import {
     Input,
     Button,
@@ -15,7 +16,13 @@ import {
     Textarea
 } from "@chakra-ui/react"
 
-export const InputTodo = () => {
+interface InputTodoProps {
+  onAdd: (title: string, content: string) => void;
+}
+
+export const InputTodo: FC<InputTodoProps> = ({ onAdd }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
         const { isOpen, onOpen, onClose } = useDisclosure()
         const initialRef = React.useRef(null)
         const finalRef = React.useRef(null)
@@ -35,12 +42,12 @@ export const InputTodo = () => {
                     <ModalBody pb={6}>
                       <FormControl>
                         <FormLabel>タイトル</FormLabel>
-                        <Input ref={initialRef} placeholder='タイトルを入力' />
+                        <Input ref={initialRef} placeholder='タイトルを入力' value={title} onChange={(e) => setTitle(e.target.value)} />
                       </FormControl>
           
                       <FormControl mt={4}>
                         <FormLabel>内容</FormLabel>
-                        <Textarea placeholder='内容を入力（100文字以内）'/>
+                        <Textarea placeholder='内容を入力（100文字以内）' value={content} onChange={(e) => setContent(e.target.value)} />
                       </FormControl>
 
                       <FormControl mt={4}>
@@ -51,9 +58,9 @@ export const InputTodo = () => {
                     </ModalBody>
           
                     <ModalFooter>
-                      <Button colorScheme='orange' mr={3}>
+                    <Button colorScheme='orange' mr={3} onClick={() => { onAdd(title, content); onClose(); }}>
                         追加
-                      </Button>
+                    </Button>
                       <Button onClick={onClose}>閉じる</Button>
                     </ModalFooter>
                   </ModalContent>

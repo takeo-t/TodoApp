@@ -1,7 +1,6 @@
 import { ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
 
 import { TodoTabs } from "./component/organisms/TodoTabs";
-import { InputTodo } from "./component/molecules/InputTodo";
 
 function App(){
   return (
@@ -10,7 +9,6 @@ function App(){
           <Flex ml={50} minWidth='max-content' alignItems='center' gap={2} justifyContent="space-between">
             <Text fontSize="70px" fontWeight="bold" color="blue.600">TODO <span style={{ color: 'black', fontSize: '30px' }}>APP</span></Text>
             <Box mr={50}>
-            <InputTodo />
             </Box>
            </Flex>
       <Flex gap={5}>
