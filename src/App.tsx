@@ -1,49 +1,25 @@
-// import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
+import { ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-import { Todo } from "./component/Todo";
-import { TodoCard } from "./component/atoms/TodoCard";
+import { TodoTabs } from "./component/organisms/TodoTabs";
+import { InputTodo } from "./component/molecules/InputTodo";
 
 function App(){
-  const todoSample = {
-    id: 1,
-    text: "Sample Todo Item"
-  };
-
-  const handleDelete = (id: number) => {
-    // ここにToDoを削除するためのロジックを書く
-    console.log(`Todo with id ${id} is to be deleted.`);
-  };
-
   return (
-    <div>
-      <Todo id={todoSample.id} text={todoSample.text} onDelete={handleDelete} />
-      <TodoCard />
-    </div>
+    <ChakraProvider>
+      <Box mr={50}>
+          <Flex ml={50} minWidth='max-content' alignItems='center' gap={2} justifyContent="space-between">
+            <Text fontSize="70px" fontWeight="bold" color="blue.600">TODO <span style={{ color: 'black', fontSize: '30px' }}>APP</span></Text>
+            <Box mr={50}>
+            <InputTodo />
+            </Box>
+           </Flex>
+      <Flex gap={5}>
+        <Box m={5}>
+         <TodoTabs />
+        </Box>
+      </Flex>
+      </Box>
+    </ChakraProvider>
   );
 }
 
