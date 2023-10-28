@@ -15,6 +15,7 @@ interface IncompleteTodoProps {
     onDelete: (index: number) => void;
 }
 
+
 export const IncompleteTodo:FC<IncompleteTodoProps> = ({ todos, onToggleComplete, onDelete }) => {
     return (
         <Box

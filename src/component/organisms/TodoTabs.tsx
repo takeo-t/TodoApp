@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex } from '@chakra-ui/react'
-import { InputTodo } from '../molecules/InputTodo'
+
 import { IncompleteTodo } from './IncompleteTodo'
 import { CompleteTodo } from './CompleteTodo'
+import { InputTodo } from "../molecules/InputTodo";
 
 export const TodoTabs = () => {
-    // 仮のtodosリストと操作関数の例
+
     const [todos, setTodos] = useState([
         { title: 'Example Task', content: 'Do something', isCompleted: false, index: 0 }
     ]);
@@ -15,7 +16,7 @@ export const TodoTabs = () => {
     const onDelete = (index: number) => {
         // Remove the todo at the specified index
     };
-
+    
     const addTodo = (title: string, content: string) => {
         const newTodo = {
             title,
@@ -28,7 +29,7 @@ export const TodoTabs = () => {
 
     return (
         <>
-        <InputTodo onAdd={addTodo} />
+        <InputTodo onAdd={addTodo}/>
         <Tabs variant='enclosed'>
             <TabList>
                 <Tab>全てのTodo</Tab>
@@ -38,12 +39,12 @@ export const TodoTabs = () => {
             <TabPanels>
             <TabPanel>
                 <Flex gap={5}>
-                    <IncompleteTodo todos={todos} onToggleComplete={onToggleComplete} onDelete={onDelete} />
+                    <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete} />
                     <CompleteTodo />
                 </Flex>
             </TabPanel>
             <TabPanel>
-                <IncompleteTodo todos={todos} onToggleComplete={onToggleComplete} onDelete={onDelete}/>
+                <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete}/>
             </TabPanel>
             <TabPanel>
                 <CompleteTodo />

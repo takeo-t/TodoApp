@@ -17,15 +17,18 @@ import {
 } from "@chakra-ui/react"
 
 interface InputTodoProps {
-  onAdd: (title: string, content: string) => void;
+  onAdd: (title: string, content: string, datetime: string) => void;
 }
 
 export const InputTodo: FC<InputTodoProps> = ({ onAdd }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-        const { isOpen, onOpen, onClose } = useDisclosure()
-        const initialRef = React.useRef(null)
-        const finalRef = React.useRef(null)
+  const [datetime, setDatetime] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+
+
     return (
         <>
                <Button size='lg' colorScheme='orange' color='white' onClick={onOpen}>ToDoを追加</Button>
@@ -52,13 +55,13 @@ export const InputTodo: FC<InputTodoProps> = ({ onAdd }) => {
 
                       <FormControl mt={4}>
                         <FormLabel>完了予定</FormLabel>
-                        <Input placeholder="Select Date and Time" size="md" type="datetime-local" />
+                        <Input placeholder="Select Date and Time" size="md" type="datetime-local" value={datetime} onChange={(e) => setDatetime(e.target.value)} />
                       </FormControl>
 
                     </ModalBody>
           
                     <ModalFooter>
-                    <Button colorScheme='orange' mr={3} onClick={() => { onAdd(title, content); onClose(); }}>
+                    <Button colorScheme='orange' mr={3} onClick={() => { onAdd(title, content, datetime); onClose(); }}>
                         追加
                     </Button>
                       <Button onClick={onClose}>閉じる</Button>
