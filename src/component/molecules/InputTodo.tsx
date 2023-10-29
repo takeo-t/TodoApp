@@ -1,4 +1,5 @@
-import React from "react"
+import { useRef, useState } from "react"
+import axios from 'axios';
 import {
     Input,
     Button,
@@ -17,8 +18,27 @@ import {
 
 export const InputTodo = () => {
         const { isOpen, onOpen, onClose } = useDisclosure()
-        const initialRef = React.useRef(null)
-        const finalRef = React.useRef(null)
+        const initialRef = useRef<HTMLInputElement | null>(null)
+        const finalRef = useRef<HTMLInputElement | null>(null)
+        const [title, setTitle] = useState<string>('');
+        const [content, setContent] = useState<string>('');
+        const [dateTime, setDateTime] = useState<string>('');
+
+        const handleSubmit = async () => {
+          const todo = {
+            title: title,
+            content: content,
+            dateTime: dateTime
+          };
+
+          try {
+            await axios.post('.NETのエンドポイント', todo);
+            onClose();
+          } catch (error) {
+            console.error('Error adding todo', error);
+          }
+        }
+
     return (
         <>
                <Button size='lg' colorScheme='orange' color='white' onClick={onOpen}>ToDoを追加</Button>
@@ -35,23 +55,23 @@ export const InputTodo = () => {
                     <ModalBody pb={6}>
                       <FormControl>
                         <FormLabel>タイトル</FormLabel>
-                        <Input ref={initialRef} placeholder='タイトルを入力' />
+                        <Input ref={initialRef} value={title} onChange={(e) => setTitle(e.target.value)} placeholder='タイトルを入力' />
                       </FormControl>
           
                       <FormControl mt={4}>
                         <FormLabel>内容</FormLabel>
-                        <Textarea placeholder='内容を入力（100文字以内）'/>
+                        <Textarea value={content} onChange={(e) => setContent(e.target.value)}placeholder='内容を入力（100文字以内）'/>
                       </FormControl>
 
                       <FormControl mt={4}>
                         <FormLabel>完了予定</FormLabel>
-                        <Input placeholder="Select Date and Time" size="md" type="datetime-local" />
+                        <Input value={dateTime} onChange={(e) => setDateTime(e.target.value)}placeholder="Select Date and Time" size="md" type="datetime-local" />
                       </FormControl>
 
                     </ModalBody>
           
                     <ModalFooter>
-                      <Button colorScheme='orange' mr={3}>
+                      <Button colorScheme='orange' mr={3} onClick={handleSubmit}>
                         追加
                       </Button>
                       <Button onClick={onClose}>閉じる</Button>

@@ -6,8 +6,6 @@ interface TodoCardProps {
   title: string;
   content: string;
   isCompleted: boolean;
-  onToggleComplete?: () => void;
-  onDelete?: () => void;
 }
 
 export const TodoCard: FC<TodoCardProps> = ({
