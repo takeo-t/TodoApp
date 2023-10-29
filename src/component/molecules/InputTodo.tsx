@@ -20,11 +20,32 @@ export const InputTodo = () => {
         const { isOpen, onOpen, onClose } = useDisclosure()
         const initialRef = useRef<HTMLInputElement | null>(null)
         const finalRef = useRef<HTMLInputElement | null>(null)
+
         const [title, setTitle] = useState<string>('');
         const [content, setContent] = useState<string>('');
         const [dateTime, setDateTime] = useState<string>('');
 
+        const [error, setError] = useState<string | null>(null);
+
+        const handleSetTitle = (value: string) => {
+          setTitle(value);
+          if (value.length <= 100) {
+            setError(null);
+          }
+        };
+
+        const handleSetContent = (value: string) => {
+          setContent(value);
+          if (value.length <= 100) {
+            setError(null);
+          }
+        };
+
         const handleSubmit = async () => {
+          if(title.length >= 100 || content.length >= 100){
+            setError("タイトルまたは内容が100文字を超えています。");
+            return;
+          }
           const todo = {
             title: title,
             content: content,
@@ -53,14 +74,15 @@ export const InputTodo = () => {
                     <ModalHeader>ToDoを追加</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
                       <FormControl>
                         <FormLabel>タイトル</FormLabel>
-                        <Input ref={initialRef} value={title} onChange={(e) => setTitle(e.target.value)} placeholder='タイトルを入力' />
+                        <Input ref={initialRef} value={title} onChange={(e) => handleSetTitle(e.target.value)} placeholder='タイトルを入力' />
                       </FormControl>
           
                       <FormControl mt={4}>
                         <FormLabel>内容</FormLabel>
-                        <Textarea value={content} onChange={(e) => setContent(e.target.value)}placeholder='内容を入力（100文字以内）'/>
+                        <Textarea value={content} onChange={(e) => handleSetContent(e.target.value)}placeholder='内容を入力（100文字以内）'/>
                       </FormControl>
 
                       <FormControl mt={4}>
