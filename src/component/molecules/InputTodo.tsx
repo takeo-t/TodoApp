@@ -60,6 +60,18 @@ export const InputTodo = () => {
           }
         }
 
+        const CrearText = () => {
+          setTitle("");
+          setContent("");
+          setDateTime("");
+          setError("");
+        }
+
+        const handleClose = () => {
+          CrearText();
+          onClose();
+        }
+
     return (
         <>
                <Button size='lg' colorScheme='orange' color='white' onClick={onOpen}>ToDoを追加</Button>
@@ -96,7 +108,7 @@ export const InputTodo = () => {
                       <Button colorScheme='orange' mr={3} onClick={handleSubmit}>
                         追加
                       </Button>
-                      <Button onClick={onClose}>閉じる</Button>
+                      <Button onClick={handleClose}>閉じる</Button>
                     </ModalFooter>
                   </ModalContent>
                 </Modal>
