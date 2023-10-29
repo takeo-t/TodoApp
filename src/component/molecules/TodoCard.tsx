@@ -1,17 +1,23 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Box, Text, Flex, Divider } from '@chakra-ui/react';
 import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
+import { TodoCardContext } from '../providers/TodoCardProvider';
 
 interface TodoCardProps {
   title: string;
   content: string;
+  index: number;
   isCompleted: boolean;
 }
 
-export const TodoCard: FC<TodoCardProps> = ({
-  title,
-  content,
-}) => {
+export const TodoCard: FC<TodoCardProps> = ({ title, content, index }) => {
+  const todoContext = useContext(TodoCardContext);
+
+  if(!todoContext){
+    throw new Error("TodoCardはTodoCardProvider内で使用する必要があります。")
+  }
+
+  const { removeTodo, toggleComplete } = todoContext;
   return (
     <Box
     borderWidth="1px"
@@ -27,9 +33,9 @@ export const TodoCard: FC<TodoCardProps> = ({
         </Text>
         <Box>
           <Flex gap={1}>
-          <CompleteButton />
+          <CompleteButton onClick={() => toggleComplete(index)}/>
           <EditButton />
-          <DeleteButton />
+          <DeleteButton onClick={() => removeTodo(index)}/>
           </Flex>
         </Box>
       </Flex>

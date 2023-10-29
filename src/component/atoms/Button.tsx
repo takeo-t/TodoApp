@@ -1,32 +1,36 @@
 import { Button } from "@chakra-ui/react"
 
-export const CompleteButton = () => {
+interface ButtonProps {
+    onClick?: () => void;
+}
+
+export const CompleteButton: React.FC<ButtonProps> = ({ onClick }) => {
     return (
-        <Button colorScheme='telegram' variant='outline'>
+        <Button colorScheme='telegram' variant='outline' onClick={onClick}>
             完了
         </Button>
     )
 }
 
-export const DeleteButton = () => {
+export const DeleteButton: React.FC<ButtonProps> = ({ onClick }) => {
     return (
-        <Button colorScheme='red' variant='outline'>
+        <Button colorScheme='red' variant='outline' onClick={onClick}>
             削除
         </Button>
     )
 }
 
-export const EditButton = () => {
+export const EditButton: React.FC<ButtonProps> = ({ onClick }) => {
     return (
-        <Button color='gray.400' variant='outline'>
+        <Button color='gray.400' variant='outline' onClick={onClick}>
             編集
         </Button>
     )
 }
 
-export const ReturnButton = () => {
+export const ReturnButton: React.FC<ButtonProps> = ({ onClick }) => {
     return (
-        <Button colorScheme='gray.500' variant='outline'>
+        <Button colorScheme='gray.500' variant='outline' onClick={onClick}>
             戻す
         </Button>
     )
