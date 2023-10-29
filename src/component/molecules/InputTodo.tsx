@@ -103,7 +103,6 @@ export const InputTodo = () => {
                       </FormControl>
 
                     </ModalBody>
-          
                     <ModalFooter>
                       <Button colorScheme='orange' mr={3} onClick={handleSubmit}>
                         追加
