@@ -20,6 +20,16 @@ function App(){
       });
    }, []);
 
+   const deleteTodo = async (id: number) => {
+     try {
+      await axios.delete(`https://localhost:7208/api/TodoItems/${id}`);
+      setTodos(prevTodos => prevTodos.filter(todo => todo.index !==id));}
+      catch (error) {
+        console.error("Todoの削除に失敗しました。", error);
+      }
+     };
+   }
+
   return (
     <ChakraProvider>
       <Box mr={50}>
