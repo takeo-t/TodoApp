@@ -8,6 +8,7 @@ export const CompleteTodo = () => {
         borderRadius="30px"
         bgColor='blue.600'
         borderColor='blue.600'
+        p="10vw"
         >
         <Stack spacing={4}>
         <Text align="center" fontSize="xl" fontWeight="bold" mb={4} color="white">完了Todo</Text>

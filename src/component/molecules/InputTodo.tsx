@@ -53,7 +53,7 @@ export const InputTodo = () => {
           };
 
           try {
-            await axios.post('.NETのエンドポイント', todo);
+            await axios.post('https://localhost:7208/api/TodoItems', todo);
             onClose();
           } catch (error) {
             console.error('Error adding todo', error);

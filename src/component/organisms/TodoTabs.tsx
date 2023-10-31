@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Box } from '@chakra-ui/react'
 
 import { IncompleteTodo } from './IncompleteTodo'
 import { CompleteTodo } from './CompleteTodo'
@@ -29,7 +29,7 @@ export const TodoTabs = () => {
 
     return (
         <>
-        <InputTodo onAdd={addTodo}/>
+        <Box maxWidth="100%">
         <Tabs variant='enclosed'>
             <TabList>
                 <Tab>全てのTodo</Tab>
@@ -39,18 +39,19 @@ export const TodoTabs = () => {
             <TabPanels>
             <TabPanel>
                 <Flex gap={5}>
-                    <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete} />
+                    {/* <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete} /> */}
                     <CompleteTodo />
                 </Flex>
             </TabPanel>
             <TabPanel>
-                <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete}/>
+                {/* <IncompleteTodo todos={todos} onDelete={onDelete} onToggleComplete={onToggleComplete}/> */}
             </TabPanel>
             <TabPanel>
                 <CompleteTodo />
             </TabPanel>
             </TabPanels>
         </Tabs>
+        </Box>
         </>
     )
 }

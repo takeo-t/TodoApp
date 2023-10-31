@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback, FC, ReactNode } from "react";
+import { createContext, useState, useCallback, FC, ReactNode } from "react";
 import { Todo, TodoContextType } from "../../Type";
 
 export const TodoCardContext = createContext<TodoContextType | undefined>(undefined);

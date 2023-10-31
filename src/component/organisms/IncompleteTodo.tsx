@@ -1,16 +1,12 @@
 import { FC } from "react";
 import { Box, Text, Stack } from "@chakra-ui/react"
 import { TodoCard } from "../molecules/TodoCard"
+import { TodoCardProps } from "../molecules/TodoCard";
 
-interface Todo {
-    title: string;
-    content: string;
-    isCompleted: boolean;
-    index: number;
-}
+
 
 interface IncompleteTodoProps {
-    todos: Todo[];
+    todos: TodoCardProps[];
     onToggleComplete: (index: number) => void;
     onDelete: (index: number) => void;
 }
@@ -23,6 +19,7 @@ export const IncompleteTodo:FC<IncompleteTodoProps> = ({ todos, onToggleComplete
         borderRadius="30px"
         bgColor="gray.200"
         borderColor="gray.200"
+        p="10vw"
         >
         <Text align="center" fontSize="xl" fontWeight="bold" mb={4}>未完了Todo</Text>
         <Stack spacing={4}>
@@ -32,9 +29,8 @@ export const IncompleteTodo:FC<IncompleteTodoProps> = ({ todos, onToggleComplete
             index={todo.index}
             title={todo.title}
             content={todo.content}
+            dateTime={todo.dateTime}
             isCompleted={todo.isCompleted}
-            onToggleComplete={() => onToggleComplete(todo.index)}
-            onDelete={() => onDelete(todo.index)}
           />
         ))}
         </Stack>

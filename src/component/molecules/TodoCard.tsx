@@ -3,14 +3,15 @@ import { Box, Text, Flex, Divider } from '@chakra-ui/react';
 import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
 import { TodoCardContext } from '../providers/TodoCardProvider';
 
-interface TodoCardProps {
+export interface TodoCardProps {
   title: string;
   content: string;
+  dateTime: string;
   index: number;
   isCompleted: boolean;
 }
 
-export const TodoCard: FC<TodoCardProps> = ({ title, content, index }) => {
+export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index }) => {
   const todoContext = useContext(TodoCardContext);
 
   if(!todoContext){
@@ -22,10 +23,9 @@ export const TodoCard: FC<TodoCardProps> = ({ title, content, index }) => {
     <Box
     borderWidth="1px"
     borderRadius="lg"
-    padding={4} mb={3}
     bgColor="white"
-    maxWidth="90%"
     marginX="auto"
+    p='5vw'
       >
       <Flex align="center" justify="space-between" mb={3}>
         <Text fontSize="xl" fontWeight="bold">
@@ -44,7 +44,7 @@ export const TodoCard: FC<TodoCardProps> = ({ title, content, index }) => {
         {content}
       </Text>
       <Flex justify="flex-end" mt={3}>
-        <Box>完了予定: 〇月×日</Box>
+        <Box>{dateTime}</Box>
       </Flex>
     </Box>
   );
