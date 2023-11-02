@@ -28,7 +28,6 @@ function App(){
         console.error("Todoの削除に失敗しました。", error);
       }
      };
-   }
 
   return (
     <ChakraProvider>
@@ -52,6 +51,7 @@ function App(){
              dateTime={todo.dateTime}
              index={index}
              isCompleted={todo.isCompleted}
+             onDelete={() => deleteTodo(todo.index)}
             />
           ))}
         </Box>

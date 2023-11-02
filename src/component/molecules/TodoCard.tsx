@@ -9,16 +9,17 @@ export interface TodoCardProps {
   dateTime: string;
   index: number;
   isCompleted: boolean;
+  onDelete: () => void;
 }
 
-export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index }) => {
+export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index, onDelete }) => {
   const todoContext = useContext(TodoCardContext);
 
   if(!todoContext){
     throw new Error("TodoCardはTodoCardProvider内で使用する必要があります。")
   }
 
-  const { removeTodo, toggleComplete } = todoContext;
+  const { toggleComplete } = todoContext;
   return (
     <Box
     borderWidth="1px"
@@ -35,7 +36,7 @@ export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index })
           <Flex gap={1}>
           <CompleteButton onClick={() => toggleComplete(index)}/>
           <EditButton />
-          <DeleteButton onClick={() => removeTodo(index)}/>
+          <DeleteButton onClick={onDelete}/>
           </Flex>
         </Box>
       </Flex>
