@@ -1,16 +1,7 @@
 import { FC } from 'react';
 import { Box, Text, Flex, Divider } from '@chakra-ui/react';
 import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
-
-export interface TodoCardProps {
-  id: number;
-  title: string;
-  content: string;
-  dateTime: string;
-  isCompleted: boolean;
-  onDelete: () => void;
-  onEdit: (id: number) => void;
-}
+import { TodoCardProps } from '../../Type';
 
 export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, id, onDelete, onEdit }) => {
 

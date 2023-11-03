@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
 
 import { InputTodo } from "./component/molecules/InputTodo";
-import { TodoCard, TodoCardProps } from "./component/molecules/TodoCard";
+import { TodoCard } from "./component/molecules/TodoCard";
 import axios from "axios";
 import { EditTodo } from "./component/molecules/EditTodo";
-
+import { TodoCardProps } from "./Type";
 
 function App(){
   const [todos, setTodos] = useState<TodoCardProps[]>([]);
@@ -42,7 +42,9 @@ function App(){
           <Flex ml={50} minWidth='max-content' alignItems='center' gap={2} justifyContent="space-between">
             <Text fontSize="70px" fontWeight="bold" color="blue.600">TODO <span style={{ color: 'black', fontSize: '30px' }}>APP</span></Text>
             <Box mr={50}>
-            <InputTodo />
+            <InputTodo
+            setTodos={setTodos}
+            />
             </Box>
            </Flex>
       <Flex gap={5}>
@@ -50,7 +52,7 @@ function App(){
          {/* <TodoTabs /> */}
         </Box>
         <Box>
-          {todos.map((todo, index) => (
+          {todos.map((todo) => (
             <TodoCard
              key={todo.id}
              id={todo.id}
@@ -69,6 +71,7 @@ function App(){
           editingTodoId={editingTodoId}
           isEditModalOpen={isEditModalOpen}
           setIsEditModalOpen={setIsEditModalOpen}
+          setTodos={setTodos}
           />
         )
         }

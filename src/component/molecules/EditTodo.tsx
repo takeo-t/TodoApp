@@ -10,20 +10,20 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
     FormControl,
     FormLabel,
     Textarea
 } from "@chakra-ui/react"
-import { TodoCardProps } from "./TodoCard";
+import { TodoCardProps } from "../../Type";
 
 interface EditTodoProps {
   editingTodoId: number | null;
   isEditModalOpen: boolean;
   setIsEditModalOpen: (isOpen: boolean) => void;
+  setTodos: (todos: TodoCardProps[]) => void;
 }
 
-export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen }: EditTodoProps) => {
+export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, setTodos }: EditTodoProps) => {
     const [editTodo, setEditTodo] = useState<TodoCardProps | null>(null);
 
     useEffect(() => {
@@ -79,6 +79,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen }:
             return;
           }
           const todo = {
+            id: editTodo?.id,
             title: title,
             content: content,
             dateTime: dateTime
@@ -86,9 +87,12 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen }:
 
           try {
             if(editTodo){
+              // console.log("Sending data:", todo);
             await axios.put(`https://localhost:7208/api/TodoItems/${editTodo.id}`, todo);
+            handleClose();
+          }
             }
-          } catch (error) {
+           catch (error) {
             console.error('Error adding todo', error);
           }
         }
@@ -102,7 +106,17 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen }:
 
         const handleClose = () => {
           CrearText();
+          fetchTodos();
           setIsEditModalOpen(false);
+        }
+
+        const fetchTodos = async () => {
+          try {
+              const update = await axios.get('https://localhost:7208/api/TodoItems');
+              setTodos(update.data);
+          } catch (error) {
+              console.error("Todoの取得に失敗しました。", error);
+          }
         }
 
     return (
@@ -138,7 +152,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen }:
                       <Button colorScheme='orange' mr={3} onClick={handleSubmit}>
                         更新
                       </Button>
-                      <Button onClick={handleClose}>閉じる</Button>
+                      <Button>閉じる</Button>
                     </ModalFooter>
                   </ModalContent>
                 </Modal>

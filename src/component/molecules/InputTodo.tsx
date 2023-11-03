@@ -15,8 +15,13 @@ import {
     FormLabel,
     Textarea
 } from "@chakra-ui/react"
+import { TodoCardProps } from "../../Type";
 
-export const InputTodo = () => {
+interface InputTodoProps {
+  setTodos: (todos: TodoCardProps[]) => void;
+}
+
+export const InputTodo = ({ setTodos }: InputTodoProps) => {
         const { isOpen, onOpen, onClose } = useDisclosure()
         const initialRef = useRef<HTMLInputElement | null>(null)
         const finalRef = useRef<HTMLInputElement | null>(null)
@@ -54,7 +59,7 @@ export const InputTodo = () => {
 
           try {
             await axios.post('https://localhost:7208/api/TodoItems', todo);
-            onClose();
+            handleClose();
           } catch (error) {
             console.error('Error adding todo', error);
           }
@@ -70,6 +75,16 @@ export const InputTodo = () => {
         const handleClose = () => {
           CrearText();
           onClose();
+          fetchTodos();
+        }
+
+        const fetchTodos = async () => {
+          try {
+              const update = await axios.get('https://localhost:7208/api/TodoItems');
+              setTodos(update.data);
+          } catch (error) {
+              console.error("Todoの取得に失敗しました。", error);
+          }
         }
 
     return (
@@ -91,7 +106,6 @@ export const InputTodo = () => {
                         <FormLabel>タイトル</FormLabel>
                         <Input ref={initialRef} value={title} onChange={(e) => handleSetTitle(e.target.value)} placeholder='タイトルを入力' />
                       </FormControl>
-          
                       <FormControl mt={4}>
                         <FormLabel>内容</FormLabel>
                         <Textarea value={content} onChange={(e) => handleSetContent(e.target.value)}placeholder='内容を入力（100文字以内）'/>

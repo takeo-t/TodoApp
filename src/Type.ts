@@ -10,3 +10,13 @@ export interface TodoContextType {
     removeTodo: (index: number) => void;
     toggleComplete: (index: number) => void;
 }
+
+export interface TodoCardProps {
+    id: number;
+    title: string;
+    content: string;
+    dateTime: string;
+    isCompleted: boolean;
+    onDelete: () => void;
+    onEdit: (id: number) => void;
+}
