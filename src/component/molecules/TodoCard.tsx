@@ -4,15 +4,15 @@ import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
 import { TodoCardContext } from '../providers/TodoCardProvider';
 
 export interface TodoCardProps {
+  id: number;
   title: string;
   content: string;
   dateTime: string;
-  index: number;
   isCompleted: boolean;
   onDelete: () => void;
 }
 
-export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index, onDelete }) => {
+export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, id, onDelete }) => {
   const todoContext = useContext(TodoCardContext);
 
   if(!todoContext){
@@ -34,7 +34,7 @@ export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, index, o
         </Text>
         <Box>
           <Flex gap={1}>
-          <CompleteButton onClick={() => toggleComplete(index)}/>
+          <CompleteButton onClick={() => toggleComplete(id)}/>
           <EditButton />
           <DeleteButton onClick={onDelete}/>
           </Flex>

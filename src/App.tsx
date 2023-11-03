@@ -23,7 +23,7 @@ function App(){
    const deleteTodo = async (id: number) => {
      try {
       await axios.delete(`https://localhost:7208/api/TodoItems/${id}`);
-      setTodos(prevTodos => prevTodos.filter(todo => todo.index !==id));}
+      setTodos(prevTodos => prevTodos.filter(todo => todo.id !==id));}
       catch (error) {
         console.error("Todoの削除に失敗しました。", error);
       }
@@ -45,13 +45,13 @@ function App(){
         <Box>
           {todos.map((todo, index) => (
             <TodoCard
-             key={index}
+             key={todo.id}
+             id={todo.id}
              title={todo.title}
              content={todo.content}
              dateTime={todo.dateTime}
-             index={index}
              isCompleted={todo.isCompleted}
-             onDelete={() => deleteTodo(todo.index)}
+             onDelete={() => deleteTodo(todo.id)}
             />
           ))}
         </Box>
