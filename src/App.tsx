@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
 
-// import { TodoTabs } from "./component/organisms/TodoTabs";
 import { InputTodo } from "./component/molecules/InputTodo";
 import { TodoCard, TodoCardProps } from "./component/molecules/TodoCard";
 import axios from "axios";
+import { EditTodo } from "./component/molecules/EditTodo";
 
 
 function App(){
   const [todos, setTodos] = useState<TodoCardProps[]>([]);
+  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
    useEffect(() => {
     axios.get('https://localhost:7208/api/TodoItems')
@@ -28,6 +30,11 @@ function App(){
         console.error("Todoの削除に失敗しました。", error);
       }
      };
+
+     const handleEdit = (id: number) => {
+      setEditingTodoId(id);
+      setIsEditModalOpen(true);
+     }
 
   return (
     <ChakraProvider>
@@ -52,9 +59,19 @@ function App(){
              dateTime={todo.dateTime}
              isCompleted={todo.isCompleted}
              onDelete={() => deleteTodo(todo.id)}
+             onEdit={() => handleEdit(todo.id)}
             />
           ))}
         </Box>
+
+        {isEditModalOpen && (
+          <EditTodo
+          editingTodoId={editingTodoId}
+          isEditModalOpen={isEditModalOpen}
+          setIsEditModalOpen={setIsEditModalOpen}
+          />
+        )
+        }
       </Flex>
       </Box>
     </ChakraProvider>

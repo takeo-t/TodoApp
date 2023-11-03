@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { TodoCardProvider } from './component/providers/TodoCardProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <TodoCardProvider>
     <App />
-    </TodoCardProvider>
   </React.StrictMode>
 );
 
