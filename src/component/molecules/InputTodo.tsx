@@ -18,10 +18,10 @@ import {
 import { TodoCardProps } from "../../Type";
 
 interface InputTodoProps {
-  setTodos: (todos: TodoCardProps[]) => void;
+  setIncompleteTodos: (todos: TodoCardProps[]) => void;
 }
 
-export const InputTodo = ({ setTodos }: InputTodoProps) => {
+export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
         const { isOpen, onOpen, onClose } = useDisclosure()
         const initialRef = useRef<HTMLInputElement | null>(null)
         const finalRef = useRef<HTMLInputElement | null>(null)
@@ -81,7 +81,7 @@ export const InputTodo = ({ setTodos }: InputTodoProps) => {
         const fetchTodos = async () => {
           try {
               const update = await axios.get('https://localhost:7208/api/TodoItems');
-              setTodos(update.data);
+              setIncompleteTodos(update.data);
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }

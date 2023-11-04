@@ -20,10 +20,10 @@ interface EditTodoProps {
   editingTodoId: number | null;
   isEditModalOpen: boolean;
   setIsEditModalOpen: (isOpen: boolean) => void;
-  setTodos: (todos: TodoCardProps[]) => void;
+  setIncompleteTodos: (todos: TodoCardProps[]) => void;
 }
 
-export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, setTodos }: EditTodoProps) => {
+export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, setIncompleteTodos }: EditTodoProps) => {
     const [editTodo, setEditTodo] = useState<TodoCardProps | null>(null);
 
     useEffect(() => {
@@ -113,7 +113,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
         const fetchTodos = async () => {
           try {
               const update = await axios.get('https://localhost:7208/api/TodoItems');
-              setTodos(update.data);
+              setIncompleteTodos(update.data);
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }
@@ -152,7 +152,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
                       <Button colorScheme='orange' mr={3} onClick={handleSubmit}>
                         更新
                       </Button>
-                      <Button>閉じる</Button>
+                      <Button onClick={handleClose}>閉じる</Button>
                     </ModalFooter>
                   </ModalContent>
                 </Modal>
