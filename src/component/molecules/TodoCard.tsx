@@ -35,16 +35,6 @@ export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDe
     onClose();
   };
 
-  const handleCompleteAlert = () => {
-    toast({
-      title: "Todoを完了しました。",
-      status: "info",
-      duration: 5000,
-      isClosable: true,
-    });
-    onClose();
-  };
-
   return (
     <>
     <Box

@@ -74,10 +74,34 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
           }
         };
 
+        // const handleSubmit = async () => {
+        //   if(title.length >= 100 || content.length >= 100){
+        //     setError("タイトルまたは内容が100文字を超えています。");
+        //     return;
+        //   }
         const handleSubmit = async () => {
-          if(title.length >= 100 || content.length >= 100){
-            setError("タイトルまたは内容が100文字を超えています。");
-            return;
+          setError(null);
+
+          let errors = [];
+          if (!title.trim()) errors.push('タイトルを入力してください。');
+          if (title.length >= 100) errors.push('タイトルは100文字以下としてください。');
+          if (!content.trim()) errors.push('内容を入力してください。');
+          if (content.length > 100) errors.push('内容は100文字以下としてください。');
+          if (!dateTime.trim()) errors.push('完了予定日時を入力してください。');
+          else {
+
+              const selectedDateTime = new Date(dateTime);
+              const currentDateTime = new Date();
+              if (selectedDateTime < currentDateTime) {
+                  errors.push('完了予定日時は現在時刻以降を指定してください。');
+              }
+          }
+      
+          if (errors.length > 0) {
+
+            setError(errors.join(' '));
+
+              return;
           }
           const todo = {
             id: editTodo?.id,
@@ -90,13 +114,19 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
             if(editTodo){
             await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${editTodo.id}`, todo);
             await fetchTodos();
-            handleClose();
-          }
-            }
-           catch (error) {
-            console.error('Error adding todo', error);
-          }
+            toast({
+              title: "ToDoを追加しました。",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+          });
         }
+            } catch (error) {
+              console.error('Error adding todo', error);
+              setError('ToDoの更新に失敗しました。');
+          }
+          handleClose();
+        };
 
         const CrearText = () => {
           setTitle("");
@@ -118,19 +148,9 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }
-          handleEditAlert();
+
         }
         const toast = useToast();
-
-        const handleEditAlert = () => {
-          toast({
-            title: "Todoを更新しました。",
-            status: "info",
-            duration: 5000,
-            isClosable: true,
-         });
-         handleClose();
-        }
 
     return (
         <>

@@ -47,59 +47,77 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           }
         };
 
+        const toast = useToast();
+
         const handleSubmit = async () => {
-          if(title.length >= 100 || content.length >= 100){
-            setError("タイトルまたは内容が100文字を超えています。");
-            return;
+          setError(null);
+
+          let errors = [];
+          if (!title.trim()) errors.push('タイトルを入力してください。');
+          if (title.length >= 100) errors.push('タイトルは100文字以下としてください。');
+          if (!content.trim()) errors.push('内容を入力してください。');
+          if (content.length > 100) errors.push('内容は100文字以下としてください。');
+          if (!dateTime.trim()) errors.push('完了予定日時を入力してください。');
+          else {
+
+              const selectedDateTime = new Date(dateTime);
+              const currentDateTime = new Date();
+              if (selectedDateTime < currentDateTime) {
+                  errors.push('完了予定日時は現在時刻以降を指定してください。');
+              }
           }
+      
+          if (errors.length > 0) {
+
+            setError(errors.join(' '));
+
+              return;
+          }
+
           const todo = {
-            title: title,
-            content: content,
-            dateTime: dateTime
+              title: title,
+              content: content,
+              dateTime: dateTime,
+
           };
 
           try {
-            await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`, todo);
-            await fetchTodos();
-            handleClose();
+              await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`, todo);
+              await fetchTodos();
+              toast({
+                  title: "ToDoを追加しました。",
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+              });
           } catch (error) {
-            console.error('Error adding todo', error);
+              console.error('ToDoの追加に失敗しました。', error);
+              setError('ToDoの追加に失敗しました。');
           }
-          handleSubmitAlert();
-        }
-
-        const CrearText = () => {
-          setTitle("");
-          setContent("");
-          setDateTime("");
-          setError("");
-        }
-
-        const handleClose = () => {
-          CrearText();
-          onClose();
-        }
-
-        const fetchTodos = async () => {
-          try {
+          handleClose();
+      };
+          const fetchTodos = async () => {
+            try {
             const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
             setIncompleteTodos(response.data);
-          } catch (error) {
+            } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
+              }
+            }
+
+          const CrearText = () => {
+            setTitle("");
+            setContent("");
+            setDateTime("");
+            setError("");
+            }
+
+          const handleClose = () => {
+            CrearText();
+            onClose();
           }
-        }
 
-        const toast = useToast();
 
-        const handleSubmitAlert = () => {
-          toast({
-            title: "Todoを追加しました。",
-            status: "info",
-            duration: 5000,
-            isClosable: true,
-          });
-          onClose();
-        }
 
     return (
         <>
