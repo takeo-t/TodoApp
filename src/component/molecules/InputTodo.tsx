@@ -58,7 +58,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           };
 
           try {
-            await axios.post('https://localhost:7208/api/TodoItems', todo);
+            await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`, todo);
             await fetchTodos();
             handleClose();
           } catch (error) {
@@ -80,7 +80,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
 
         const fetchTodos = async () => {
           try {
-            const response = await axios.get('https://localhost:7208/api/TodoItems?status=0');
+            const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
             setIncompleteTodos(response.data);
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);

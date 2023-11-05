@@ -23,8 +23,10 @@ export interface TodoCardProps {
 }
 
 export interface CompletedTodoCardProps {
+    id: number;
     title: string;
     content: string;
     dateTime: string;
+    onInComplete: (todoId: number) => void;
     onDelete: () => void;
 }

@@ -34,7 +34,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
     const editTodoModal = async (id: number) => {
       try {
-        const response = await axios.get(`https://localhost:7208/api/TodoItems/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${id}`);
         setEditTodo(response.data);}
       catch (error) {
         console.error("Todoの取得に失敗しました。", error);
@@ -87,7 +87,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
           try {
             if(editTodo){
-            await axios.put(`https://localhost:7208/api/TodoItems/${editTodo.id}`, todo);
+            await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${editTodo.id}`, todo);
             await fetchTodos();
             handleClose();
           }
@@ -111,7 +111,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
         const fetchTodos = async () => {
           try {
-            const response = await axios.get('https://localhost:7208/api/TodoItems?status=0');
+            const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
             setIncompleteTodos(response.data);
             console.log(setIncompleteTodos);
           } catch (error) {

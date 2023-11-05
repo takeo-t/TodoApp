@@ -13,10 +13,10 @@ function App(){
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [incompleteTodos, setIncompleteTodos] = useState<TodoCardProps[]>([]);
   const [completedTodos, setCompletedTodos] = useState<TodoCardProps[]>([]);
-  console.log('editingTodoId',(editingTodoId))
+  // console.log('editingTodoId',(editingTodoId))
 
   useEffect(() => {
-    axios.get('https://localhost:7208/api/TodoItems')
+    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`)
       .then(response => {
         const completed = response.data.filter((todo: TodoCardProps) => todo.status === 1);
         const incomplete = response.data.filter((todo: TodoCardProps) => todo.status === 0);
@@ -27,12 +27,12 @@ function App(){
         console.error("Todoの取得に失敗しました。", error);
       });
   }, []);
-      console.log(incompleteTodos);
-      console.log(completedTodos);
+      // console.log(incompleteTodos);
+      // console.log(completedTodos);
 
     const deleteTodo = async (id: number) => {
       try {
-      await axios.delete(`https://localhost:7208/api/TodoItems/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${id}`);
       setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       }
@@ -42,22 +42,52 @@ function App(){
       };
 
       const handleComplete = async (completedTodoId: number) => {
-        console.log("handleComplete called with id:", completedTodoId);
+        // console.log("handleComplete called with id:", completedTodoId);
         try {
-          const response = await axios.put(`https://localhost:7208/api/TodoItems/${completedTodoId}/markComplete`, {
+          const response = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${completedTodoId}/markComplete`, {
             Status: 1
           });
-          console.log("Updated todo:", response.data);
           const updatedTodo = response.data;
           setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== completedTodoId));
-          setCompletedTodos(prevTodos => {
-            const newCompletedTodos = [...prevTodos, {...updatedTodo, Status: 1}];
-            console.log("New completed todos:", newCompletedTodos);
-            return newCompletedTodos;
-          });
-          
+          setCompletedTodos(prevTodos => [...prevTodos, updatedTodo]);
         } catch (error) {
           console.error("Todoの完了処理に失敗しました。", error);
+        }
+        fetchCompleteTodos();
+      }
+
+      const handleInComplete = async (InCompleteTodoId: number) => {
+        try {
+          const response = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${InCompleteTodoId}/markIncomplete`, {
+          Status: 0
+          });
+
+          // console.log("Updated todo:", response.data);
+          const updatedTodo = response.data;
+          setIncompleteTodos(prevTodos => [...prevTodos, updatedTodo])
+          setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== InCompleteTodoId));
+        } catch (error) {
+          console.error("Todoを未完了に戻せません。", error);
+        }
+        fetchInCompleteTodos();
+      }
+
+      const fetchInCompleteTodos = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
+          setIncompleteTodos(response.data);
+        } catch (error) {
+            console.error("Todoの取得に失敗しました。", error);
+        }
+      }
+
+      const fetchCompleteTodos = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=1`);
+          setCompletedTodos(response.data);
+          console.log(response.data)
+        } catch (error) {
+            console.error("Todoの取得に失敗しました。", error);
         }
       }
 
@@ -82,35 +112,6 @@ function App(){
       <Flex gap={5}>
         <Box m={5}>
         </Box>
-        {/* <Box>
-          <Flex>
-          <Box m={10}>
-          {incompleteTodos.map((todo) => (
-            <TodoCard
-             key={todo.id}
-             id={todo.id}
-             title={todo.title}
-             content={todo.content}
-             dateTime={todo.dateTime}
-             Status={todo.Status}
-             onDelete={() => deleteTodo(todo.id)}
-             onEdit={() => handleEdit(todo.id)}
-             onComplete={() => handleComplete(todo.id)}
-            />
-          ))}
-          </Box>
-          <Box m={10}>
-          {completedTodos.map((todo) => (
-            <CompletedTodoCard
-            key={todo.id}
-            title={todo.title}
-            content={todo.content}
-            dateTime={todo.dateTime}
-            />
-          ))}
-          </Box>
-          </Flex>
-        </Box> */}
         <Tabs variant='enclosed'>
             <TabList>
                 <Tab>全てのTodo</Tab>
@@ -143,9 +144,11 @@ function App(){
           {completedTodos.map((todo) => (
             <CompletedTodoCard
             key={todo.id}
+            id={todo.id}
             title={todo.title}
             content={todo.content}
             dateTime={todo.dateTime}
+            onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
           ))}
@@ -175,9 +178,11 @@ function App(){
             {completedTodos.map((todo) => (
             <CompletedTodoCard
             key={todo.id}
+            id={todo.id}
             title={todo.title}
             content={todo.content}
             dateTime={todo.dateTime}
+            onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
           ))}

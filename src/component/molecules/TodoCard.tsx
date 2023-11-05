@@ -3,7 +3,7 @@ import { Box, Text, Flex, Divider } from '@chakra-ui/react';
 import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
 import { TodoCardProps } from '../../Type';
 
-export const TodoCard: FC<TodoCardProps> = ({ title, content, dateTime, id, onDelete, onEdit, onComplete }) => {
+export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime,onDelete, onEdit, onComplete }) => {
 
   return (
     <Box

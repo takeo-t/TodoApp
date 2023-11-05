@@ -3,7 +3,7 @@ import { Box, Text, Flex, Divider } from '@chakra-ui/react';
 import { CompletedTodoCardProps } from '../../Type';
 import { DeleteButton,ReturnButton } from '../atoms/Button';
 
-export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ title, content, dateTime, onDelete }) => {
+export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, content, dateTime, onInComplete, onDelete }) => {
   return (
     <Box
       borderWidth="1px"
@@ -18,7 +18,7 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ title, content, 
         </Text>
         <Box>
           <Flex gap={1}>
-          <ReturnButton />
+          <ReturnButton onClick={() => onInComplete(id)}/>
           <DeleteButton onClick={onDelete}/>
           </Flex>
         </Box>
