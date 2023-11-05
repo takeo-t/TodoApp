@@ -59,6 +59,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
 
           try {
             await axios.post('https://localhost:7208/api/TodoItems', todo);
+            await fetchTodos();
             handleClose();
           } catch (error) {
             console.error('Error adding todo', error);
@@ -75,13 +76,12 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
         const handleClose = () => {
           CrearText();
           onClose();
-          fetchTodos();
         }
 
         const fetchTodos = async () => {
           try {
-              const update = await axios.get('https://localhost:7208/api/TodoItems');
-              setIncompleteTodos(update.data);
+            const response = await axios.get('https://localhost:7208/api/TodoItems?status=0');
+            setIncompleteTodos(response.data);
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }

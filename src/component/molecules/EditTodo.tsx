@@ -87,8 +87,8 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
           try {
             if(editTodo){
-              // console.log("Sending data:", todo);
             await axios.put(`https://localhost:7208/api/TodoItems/${editTodo.id}`, todo);
+            await fetchTodos();
             handleClose();
           }
             }
@@ -106,14 +106,14 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
         const handleClose = () => {
           CrearText();
-          fetchTodos();
           setIsEditModalOpen(false);
         }
 
         const fetchTodos = async () => {
           try {
-              const update = await axios.get('https://localhost:7208/api/TodoItems');
-              setIncompleteTodos(update.data);
+            const response = await axios.get('https://localhost:7208/api/TodoItems?status=0');
+            setIncompleteTodos(response.data);
+            console.log(setIncompleteTodos);
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
 
 import { InputTodo } from "./component/molecules/InputTodo";
 import { TodoCard } from "./component/molecules/TodoCard";
@@ -13,12 +13,13 @@ function App(){
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [incompleteTodos, setIncompleteTodos] = useState<TodoCardProps[]>([]);
   const [completedTodos, setCompletedTodos] = useState<TodoCardProps[]>([]);
+  console.log('editingTodoId',(editingTodoId))
 
   useEffect(() => {
     axios.get('https://localhost:7208/api/TodoItems')
       .then(response => {
-        const completed = response.data.filter((todo: TodoCardProps) => todo.Status === 1);
-        const incomplete = response.data.filter((todo: TodoCardProps) => todo.Status === 0);
+        const completed = response.data.filter((todo: TodoCardProps) => todo.status === 1);
+        const incomplete = response.data.filter((todo: TodoCardProps) => todo.status === 0);
         setCompletedTodos(completed);
         setIncompleteTodos(incomplete);
       })
@@ -26,6 +27,8 @@ function App(){
         console.error("Todoの取得に失敗しました。", error);
       });
   }, []);
+      console.log(incompleteTodos);
+      console.log(completedTodos);
 
     const deleteTodo = async (id: number) => {
       try {
@@ -79,7 +82,9 @@ function App(){
       <Flex gap={5}>
         <Box m={5}>
         </Box>
-        <Box>
+        {/* <Box>
+          <Flex>
+          <Box m={10}>
           {incompleteTodos.map((todo) => (
             <TodoCard
              key={todo.id}
@@ -93,6 +98,8 @@ function App(){
              onComplete={() => handleComplete(todo.id)}
             />
           ))}
+          </Box>
+          <Box m={10}>
           {completedTodos.map((todo) => (
             <CompletedTodoCard
             key={todo.id}
@@ -100,10 +107,83 @@ function App(){
             content={todo.content}
             dateTime={todo.dateTime}
             />
-          ))
-
-          }
+          ))}
+          </Box>
+          </Flex>
+        </Box> */}
+        <Tabs variant='enclosed'>
+            <TabList>
+                <Tab>全てのTodo</Tab>
+                <Tab>未完了Todo</Tab>
+                <Tab>完了Todo</Tab>
+            </TabList>
+            <TabPanels>
+            <TabPanel>
+                <Flex gap={5}>
+                <Box>
+          <Flex>
+          <Box m={10}>
+          <Text>未完了Todo</Text>
+          {incompleteTodos.map((todo) => (
+            <TodoCard
+             key={todo.id}
+             id={todo.id}
+             title={todo.title}
+             content={todo.content}
+             dateTime={todo.dateTime}
+             status={todo.status}
+             onDelete={() => deleteTodo(todo.id)}
+             onEdit={() => handleEdit(todo.id)}
+             onComplete={() => handleComplete(todo.id)}
+            />
+          ))}
+          </Box>
+          <Box m={10}>
+          <Text>完了Todo</Text>
+          {completedTodos.map((todo) => (
+            <CompletedTodoCard
+            key={todo.id}
+            title={todo.title}
+            content={todo.content}
+            dateTime={todo.dateTime}
+            onDelete={() => deleteTodo(todo.id)}
+            />
+          ))}
+          </Box>
+          </Flex>
         </Box>
+                </Flex>
+            </TabPanel>
+            <TabPanel>
+            <Text>未完了Todo</Text>
+            {incompleteTodos.map((todo) => (
+            <TodoCard
+             key={todo.id}
+             id={todo.id}
+             title={todo.title}
+             content={todo.content}
+             dateTime={todo.dateTime}
+             status={todo.status}
+             onDelete={() => deleteTodo(todo.id)}
+             onEdit={() => handleEdit(todo.id)}
+             onComplete={() => handleComplete(todo.id)}
+            />
+          ))}
+            </TabPanel>
+            <TabPanel>
+            <Text>完了Todo</Text>
+            {completedTodos.map((todo) => (
+            <CompletedTodoCard
+            key={todo.id}
+            title={todo.title}
+            content={todo.content}
+            dateTime={todo.dateTime}
+            onDelete={() => deleteTodo(todo.id)}
+            />
+          ))}
+            </TabPanel>
+            </TabPanels>
+        </Tabs>
 
         {isEditModalOpen && (
           <EditTodo
