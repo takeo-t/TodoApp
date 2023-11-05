@@ -1,11 +1,32 @@
-import { FC } from 'react';
-import { Box, Text, Flex, Divider } from '@chakra-ui/react';
-import { CompleteButton, DeleteButton, EditButton } from '../atoms/Button';
+import { FC, useRef, useState } from 'react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+  Box,
+  Text,
+  Flex,
+  Divider } from '@chakra-ui/react';
+import { CompleteButton, DeleteButton, EditButton, } from '../atoms/Button';
 import { TodoCardProps } from '../../Type';
 
-export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime,onDelete, onEdit, onComplete }) => {
+export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime, onDelete, onEdit, onComplete }) => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
+  const onClose = () => setIsAlertOpen(false);
+
+  const deleteTodo = () => {
+    onDelete();
+    onClose();
+  };
+  
   return (
+    <>
     <Box
     borderWidth="1px"
     borderRadius="lg"
@@ -21,7 +42,7 @@ export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime,onDe
           <Flex gap={1}>
           <CompleteButton onClick={() => onComplete(id)}/>
           <EditButton onClick={() => onEdit(id)}/>
-          <DeleteButton onClick={onDelete}/>
+          <DeleteButton onClick={() => setIsAlertOpen(true)} />
           </Flex>
         </Box>
       </Flex>
@@ -33,6 +54,39 @@ export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime,onDe
         <Box>{dateTime}</Box>
       </Flex>
     </Box>
+
+    <AlertDialog
+        isOpen={isAlertOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Todoを削除
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              次のTodoを削除してもよろしいですか？
+              <br /><br />
+              <Text fontSize="md" fontWeight="bold">{title}</Text>
+              <Text fontSize="sm">{content}</Text>
+              <br />
+              この操作は元に戻せません。
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                キャンセル
+              </Button>
+              <Button colorScheme='red' onClick={deleteTodo} ml={3}>
+                削除
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </>
   );
 };
 
