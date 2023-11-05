@@ -17,7 +17,7 @@ export interface TodoCardProps {
     content: string;
     dateTime: string;
     status: 0 | 1;
-    onDelete: () => void;
+    onDelete: (id: number) => void;
     onEdit: (id: number) => void;
     onComplete: (todoId: number) => void;
 }
@@ -28,5 +28,5 @@ export interface CompletedTodoCardProps {
     content: string;
     dateTime: string;
     onInComplete: (todoId: number) => void;
-    onDelete: () => void;
+    onDelete: (id: number) => void;
 }

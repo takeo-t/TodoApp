@@ -10,21 +10,41 @@ import {
   Box,
   Text,
   Flex,
-  Divider } from '@chakra-ui/react';
+  Divider,
+  useToast } from '@chakra-ui/react';
 import { CompleteButton, DeleteButton, EditButton, } from '../atoms/Button';
 import { TodoCardProps } from '../../Type';
 
-export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime, onDelete, onEdit, onComplete }) => {
+export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDelete, onEdit, onComplete }) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
 
   const onClose = () => setIsAlertOpen(false);
 
-  const deleteTodo = () => {
-    onDelete();
+  const toast = useToast();
+
+  const handleDelete = () => {
+    onDelete(id);
+    toast({
+      title: "Todoを削除しました。",
+      description: `${title}が削除されました。`,
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    });
     onClose();
   };
-  
+
+  const handleCompleteAlert = () => {
+    toast({
+      title: "Todoを完了しました。",
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    });
+    onClose();
+  };
+
   return (
     <>
     <Box
@@ -79,7 +99,7 @@ export const TodoCard: FC<TodoCardProps> = ({  id, title, content, dateTime, onD
               <Button ref={cancelRef} onClick={onClose}>
                 キャンセル
               </Button>
-              <Button colorScheme='red' onClick={deleteTodo} ml={3}>
+              <Button colorScheme='red' onClick={handleDelete} ml={3}>
                 削除
               </Button>
             </AlertDialogFooter>

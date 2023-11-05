@@ -12,7 +12,8 @@ import {
     ModalCloseButton,
     FormControl,
     FormLabel,
-    Textarea
+    Textarea,
+    useToast
 } from "@chakra-ui/react"
 import { TodoCardProps } from "../../Type";
 
@@ -117,6 +118,18 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }
+          handleEditAlert();
+        }
+        const toast = useToast();
+
+        const handleEditAlert = () => {
+          toast({
+            title: "Todoを更新しました。",
+            status: "info",
+            duration: 5000,
+            isClosable: true,
+         });
+         handleClose();
         }
 
     return (

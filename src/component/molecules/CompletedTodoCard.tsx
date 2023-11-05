@@ -10,7 +10,8 @@ import {
     Box,
     Text,
     Flex,
-    Divider } from '@chakra-ui/react';
+    Divider,
+    useToast } from '@chakra-ui/react';
 import { CompletedTodoCardProps } from '../../Type';
 import { DeleteButton,ReturnButton } from '../atoms/Button';
 
@@ -20,9 +21,18 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, conte
   
     const onClose = () => setIsAlertOpen(false);
   
-    const deleteTodo = () => {
-      onDelete();
-      onClose();
+    const toast = useToast();
+
+    const handleDelete = () => {
+      onDelete(id);
+      toast({
+        title: "Todoを削除しました。",
+        description: `${title}が削除されました。`,
+        status: "info",
+        duration: 5000,
+        isClosable: true,
+     });
+    onClose();
     };
     return (
     <>
@@ -77,7 +87,7 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, conte
               <Button ref={cancelRef} onClick={onClose}>
                 キャンセル
               </Button>
-              <Button colorScheme='red' onClick={deleteTodo} ml={3}>
+              <Button colorScheme='red' onClick={handleDelete} ml={3}>
                 削除
               </Button>
             </AlertDialogFooter>

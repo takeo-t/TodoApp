@@ -13,7 +13,8 @@ import {
     useDisclosure,
     FormControl,
     FormLabel,
-    Textarea
+    Textarea,
+    useToast
 } from "@chakra-ui/react"
 import { TodoCardProps } from "../../Type";
 
@@ -64,6 +65,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           } catch (error) {
             console.error('Error adding todo', error);
           }
+          handleSubmitAlert();
         }
 
         const CrearText = () => {
@@ -85,6 +87,18 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
           }
+        }
+
+        const toast = useToast();
+
+        const handleSubmitAlert = () => {
+          toast({
+            title: "Todoを追加しました。",
+            status: "info",
+            duration: 5000,
+            isClosable: true,
+          });
+          onClose();
         }
 
     return (

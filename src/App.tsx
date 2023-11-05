@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel, ChakraProvider, Flex, Box, Text } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, ChakraProvider, Flex, Box, Text, useToast } from "@chakra-ui/react";
 
 import { InputTodo } from "./component/molecules/InputTodo";
 import { TodoCard } from "./component/molecules/TodoCard";
@@ -50,6 +50,7 @@ function App(){
           const updatedTodo = response.data;
           setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== completedTodoId));
           setCompletedTodos(prevTodos => [...prevTodos, updatedTodo]);
+          handleCompleteAlert();
         } catch (error) {
           console.error("Todoの完了処理に失敗しました。", error);
         }
@@ -66,6 +67,7 @@ function App(){
           const updatedTodo = response.data;
           setIncompleteTodos(prevTodos => [...prevTodos, updatedTodo])
           setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== InCompleteTodoId));
+          handleInCompleteAlert();
         } catch (error) {
           console.error("Todoを未完了に戻せません。", error);
         }
@@ -90,6 +92,26 @@ function App(){
             console.error("Todoの取得に失敗しました。", error);
         }
       }
+
+      const toast = useToast();
+
+      const handleCompleteAlert = () => {
+        toast({
+          title: "Todoを完了しました。",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+        });
+      };
+
+      const handleInCompleteAlert = () => {
+        toast({
+          title: "Todoを未完了に戻しました。",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+        });
+      };
 
 
     const handleEdit = (id: number) => {
