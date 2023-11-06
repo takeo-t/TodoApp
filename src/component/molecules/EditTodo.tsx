@@ -74,11 +74,6 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
           }
         };
 
-        // const handleSubmit = async () => {
-        //   if(title.length >= 100 || content.length >= 100){
-        //     setError("タイトルまたは内容が100文字を超えています。");
-        //     return;
-        //   }
         const handleSubmit = async () => {
           setError(null);
 
@@ -115,14 +110,14 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
             await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${editTodo.id}`, todo);
             await fetchTodos();
             toast({
-              title: "ToDoを追加しました。",
+              title: "ToDoを更新しました。",
               status: "success",
               duration: 5000,
               isClosable: true,
           });
         }
             } catch (error) {
-              console.error('Error adding todo', error);
+              console.error('ToDoの更新に失敗しました。', error);
               setError('ToDoの更新に失敗しました。');
           }
           handleClose();

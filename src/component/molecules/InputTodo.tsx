@@ -136,7 +136,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
                     {error && <p style={{ color: "red" }}>{error}</p>}
                       <FormControl>
                         <FormLabel>タイトル</FormLabel>
-                        <Input ref={initialRef} value={title} onChange={(e) => handleSetTitle(e.target.value)} placeholder='タイトルを入力' />
+                        <Input ref={initialRef} value={title} onChange={(e) => handleSetTitle(e.target.value)} placeholder='タイトルを入力（100文字以内）' />
                       </FormControl>
                       <FormControl mt={4}>
                         <FormLabel>内容</FormLabel>
