@@ -25,6 +25,7 @@ function App(){
       })
       .catch(error => {
         console.error("Todoの取得に失敗しました。", error);
+        console.log(process.env.REACT_APP_API_ENDPOINT)
       });
   }, []);
       // console.log(incompleteTodos);
