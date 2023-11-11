@@ -61,7 +61,7 @@ export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDe
         {content}
       </Text>
       <Flex justify="flex-end" mt={3}>
-        <Box>{dateTime}</Box>
+        <Box>完了予定日: {dateTime}</Box>
       </Flex>
     </Box>
 
