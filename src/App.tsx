@@ -16,7 +16,9 @@ function App(){
   // console.log('editingTodoId',(editingTodoId))
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`)
+    // axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`)
+    axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems`)
+
       .then(response => {
         const completed = response.data.filter((todo: TodoCardProps) => todo.status === 1);
         const incomplete = response.data.filter((todo: TodoCardProps) => todo.status === 0);
