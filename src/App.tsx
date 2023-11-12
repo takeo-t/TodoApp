@@ -35,7 +35,7 @@ function App(){
 
     const deleteTodo = async (id: number) => {
       try {
-      await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${id}`);
+      await axios.delete(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${id}`);
       setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       }
@@ -47,7 +47,7 @@ function App(){
       const handleComplete = async (completedTodoId: number) => {
         // console.log("handleComplete called with id:", completedTodoId);
         try {
-          const response = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${completedTodoId}/markComplete`, {
+          const response = await axios.put(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${completedTodoId}/markComplete`, {
             Status: 1
           });
           const updatedTodo = response.data;
@@ -62,7 +62,7 @@ function App(){
 
       const handleInComplete = async (InCompleteTodoId: number) => {
         try {
-          const response = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems/${InCompleteTodoId}/markIncomplete`, {
+          const response = await axios.put(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${InCompleteTodoId}/markIncomplete`, {
           Status: 0
           });
 
@@ -79,7 +79,7 @@ function App(){
 
       const fetchInCompleteTodos = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
+          const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=0`);
           setIncompleteTodos(response.data);
         } catch (error) {
             console.error("Todoの取得に失敗しました。", error);
@@ -88,7 +88,7 @@ function App(){
 
       const fetchCompleteTodos = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=1`);
+          const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=1`);
           setCompletedTodos(response.data);
           console.log(response.data)
         } catch (error) {

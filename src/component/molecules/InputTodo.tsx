@@ -82,7 +82,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           };
 
           try {
-              await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems`, todo);
+              await axios.post(`https://apitodo118satellite.azurewebsites.net/api/TodoItems`, todo);
               await fetchTodos();
               toast({
                   title: "ToDoを追加しました。",
@@ -98,7 +98,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
       };
           const fetchTodos = async () => {
             try {
-            const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/TodoItems?status=0`);
+            const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=0`);
             setIncompleteTodos(response.data);
             } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
