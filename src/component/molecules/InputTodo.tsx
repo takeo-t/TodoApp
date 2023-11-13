@@ -82,23 +82,23 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
           };
 
           try {
-              await axios.post(`https://apitodo118satellite.azurewebsites.net/api/TodoItems`, todo);
+              await axios.post(`${process.env.REACT_APP_API_URL}/api/TodoItems`, todo);
               await fetchTodos();
               toast({
-                  title: "ToDoを追加しました。",
+                  title: "Todoを追加しました。",
                   status: "success",
                   duration: 5000,
                   isClosable: true,
               });
           } catch (error) {
-              console.error('ToDoの追加に失敗しました。', error);
-              setError('ToDoの追加に失敗しました。');
+              console.error('Todoの追加に失敗しました。', error);
+              setError('Todoの追加に失敗しました。');
           }
           handleClose();
       };
           const fetchTodos = async () => {
             try {
-            const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=0`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems?status=0`);
             setIncompleteTodos(response.data);
             } catch (error) {
               console.error("Todoの取得に失敗しました。", error);
@@ -130,7 +130,7 @@ export const InputTodo = ({ setIncompleteTodos }: InputTodoProps) => {
                 >
                   <ModalOverlay />
                   <ModalContent>
-                    <ModalHeader>ToDoを追加</ModalHeader>
+                    <ModalHeader>Todoを追加</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                     {error && <p style={{ color: "red" }}>{error}</p>}

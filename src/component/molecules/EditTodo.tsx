@@ -35,7 +35,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
     const editTodoModal = async (id: number) => {
       try {
-        const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems/${id}`);
         setEditTodo(response.data);}
       catch (error) {
         console.error("Todoの取得に失敗しました。", error);
@@ -107,7 +107,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
           try {
             if(editTodo){
-            await axios.put(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${editTodo.id}`, todo);
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/TodoItems/${editTodo.id}`, todo);
             await fetchTodos();
             toast({
               title: "ToDoを更新しました。",
@@ -137,7 +137,7 @@ export const EditTodo = ({ editingTodoId, isEditModalOpen, setIsEditModalOpen, s
 
         const fetchTodos = async () => {
           try {
-            const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=0`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems?status=0`);
             setIncompleteTodos(response.data);
             console.log(setIncompleteTodos);
           } catch (error) {

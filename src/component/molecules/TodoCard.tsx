@@ -42,28 +42,26 @@ export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDe
     borderRadius="lg"
     bgColor="white"
     marginX="auto"
-    p='5vw'
+    p="30px"
+    width="400px"
+    height="300px"
       >
-      <Flex align="center" justify="space-between" mb={3}>
-        <Text fontSize="xl" fontWeight="bold">
-          {title}
+       <Text fontSize="xl" fontWeight="bold" mt={2} mb={1}>
+        {title}
         </Text>
-        <Box>
-          <Flex gap={1}>
-          <CompleteButton onClick={() => onComplete(id)}/>
-          <EditButton onClick={() => onEdit(id)}/>
-          <DeleteButton onClick={() => setIsAlertOpen(true)} />
-          </Flex>
+        <Divider mb={3}/>
+        <Text mb={3} minHeight="100px">
+          {content}
+          </Text>
+          <Box>
+            完了予定日: {dateTime}
+            </Box>
+            <Flex justify="flex-end" mt={3} gap={1}>
+              <CompleteButton onClick={() => onComplete(id)}/>
+              <EditButton onClick={() => onEdit(id)}/>
+              <DeleteButton onClick={() => setIsAlertOpen(true)} />
+              </Flex>
         </Box>
-      </Flex>
-      <Divider mb={3}/>
-      <Text mb={3}>
-        {content}
-      </Text>
-      <Flex justify="flex-end" mt={3}>
-        <Box>完了予定日: {dateTime}</Box>
-      </Flex>
-    </Box>
 
     <AlertDialog
         isOpen={isAlertOpen}

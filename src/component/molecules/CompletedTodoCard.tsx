@@ -41,26 +41,21 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, conte
       borderRadius="lg"
       bgColor="white"
       marginX="auto"
-      p='5vw'
+      p="30px"
+      width="400px"
+      height="300px"
     >
-      <Flex align="center" justify="space-between" mb={3}>
-        <Text fontSize="xl" fontWeight="bold">
+        <Text fontSize="xl" fontWeight="bold" mt={2} mb={1}>
           {title}
         </Text>
-        <Box>
-          <Flex gap={1}>
+        <Divider mb={3}/>
+        <Text mb={3} minHeight="140px">
+          {content}
+          </Text>
+          <Flex justify="flex-end" mt={3} gap={1}>
           <ReturnButton onClick={() => onInComplete(id)}/>
           <DeleteButton onClick={() => setIsAlertOpen(true)} />
           </Flex>
-        </Box>
-      </Flex>
-      <Divider mb={3}/>
-      <Text mb={3}>
-        {content}
-      </Text>
-      <Flex justify="flex-end" mt={3}>
-        <Box>{dateTime}</Box>
-      </Flex>
     </Box>
 
     <AlertDialog

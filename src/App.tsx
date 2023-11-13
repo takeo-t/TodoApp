@@ -16,7 +16,7 @@ function App(){
   // console.log('editingTodoId',(editingTodoId))
 
   useEffect(() => {
-    axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems`)
+    axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems`)
 
       .then(response => {
         const completed = response.data.filter((todo: TodoCardProps) => todo.status === 1);
@@ -33,7 +33,7 @@ function App(){
 
     const deleteTodo = async (id: number) => {
       try {
-      await axios.delete(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/TodoItems/${id}`);
       setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
       }
@@ -45,7 +45,7 @@ function App(){
       const handleComplete = async (completedTodoId: number) => {
         // console.log("handleComplete called with id:", completedTodoId);
         try {
-          const response = await axios.put(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${completedTodoId}/markComplete`, {
+          const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/TodoItems/${completedTodoId}/markComplete`, {
             Status: 1
           });
           const updatedTodo = response.data;
@@ -60,7 +60,7 @@ function App(){
 
       const handleInComplete = async (InCompleteTodoId: number) => {
         try {
-          const response = await axios.put(`https://apitodo118satellite.azurewebsites.net/api/TodoItems/${InCompleteTodoId}/markIncomplete`, {
+          const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/TodoItems/${InCompleteTodoId}/markIncomplete`, {
           Status: 0
           });
 
@@ -77,7 +77,7 @@ function App(){
 
       const fetchInCompleteTodos = async () => {
         try {
-          const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=0`);
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems?status=0`);
           setIncompleteTodos(response.data);
         } catch (error) {
             console.error("Todoの取得に失敗しました。", error);
@@ -86,7 +86,7 @@ function App(){
 
       const fetchCompleteTodos = async () => {
         try {
-          const response = await axios.get(`https://apitodo118satellite.azurewebsites.net/api/TodoItems?status=1`);
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems?status=1`);
           setCompletedTodos(response.data);
           console.log(response.data)
         } catch (error) {
@@ -142,13 +142,17 @@ function App(){
                 <Tab>完了Todo</Tab>
             </TabList>
             <TabPanels>
-            <TabPanel>
-                <Flex gap={5}>
-                <Box>
-          <Flex>
-          <Box m={10}>
-          <Text>未完了Todo</Text>
-          {incompleteTodos.map((todo) => (
+            <TabPanel width="1000px">
+          <Flex gap={5}>
+          <Box>
+          <Flex gap={5}>
+          <Box bg="blue.100" borderRadius="20px" pb={60}>
+          <Box width="400px" m={10}>
+          <Flex justifyContent="center" alignItems="center">
+            <Text fontSize="2xl" fontWeight="bold" color="white">未完了Todo</Text>
+          </Flex>
+          {incompleteTodos.length > 0 ? (
+            incompleteTodos.map((todo) => (
             <TodoCard
              key={todo.id}
              id={todo.id}
@@ -160,11 +164,22 @@ function App(){
              onEdit={() => handleEdit(todo.id)}
              onComplete={() => handleComplete(todo.id)}
             />
-          ))}
+          ))
+          ) : (
+            <Flex justifyContent="center" alignItems="center" height="300px">
+            <Text textAlign="center" fontSize="lg" color="white">Todoがありません</Text>
+            </Flex>
+          )}
           </Box>
-          <Box m={10}>
-          <Text>完了Todo</Text>
-          {completedTodos.map((todo) => (
+          </Box>
+
+          <Box bg="gray.100" borderRadius="20px" pb={60}>
+          <Box width="400px" m={10} >
+          <Flex justifyContent="center" alignItems="center">
+            <Text fontSize="2xl" fontWeight="bold" >完了Todo</Text>
+          </Flex>
+          {completedTodos.length > 0 ? (
+           completedTodos.map((todo) => (
             <CompletedTodoCard
             key={todo.id}
             id={todo.id}
@@ -174,15 +189,26 @@ function App(){
             onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
-          ))}
+          ))
+          ) : (
+          <Flex justifyContent="center" alignItems="center" height="300px">
+          <Text textAlign="center" fontSize="lg">完了したTodoがありません</Text>
+          </Flex>
+          )}
+          </Box>
           </Box>
           </Flex>
         </Box>
-                </Flex>
+            </Flex>
             </TabPanel>
-            <TabPanel>
-            <Text>未完了Todo</Text>
-            {incompleteTodos.map((todo) => (
+            <TabPanel width="1000px">
+            <Box bg="blue.100" borderRadius="20px" pb={60}>
+          <Box width="400px" m={10}>
+          <Flex justifyContent="center" alignItems="center">
+            <Text fontSize="2xl" fontWeight="bold" color="white">未完了Todo</Text>
+          </Flex>
+          {incompleteTodos.length > 0 ? (
+            incompleteTodos.map((todo) => (
             <TodoCard
              key={todo.id}
              id={todo.id}
@@ -194,11 +220,23 @@ function App(){
              onEdit={() => handleEdit(todo.id)}
              onComplete={() => handleComplete(todo.id)}
             />
-          ))}
+          ))
+          ) : (
+            <Flex justifyContent="center" alignItems="center" height="300px">
+            <Text textAlign="center" fontSize="lg" color="white">Todoがありません</Text>
+            </Flex>
+          )}
+          </Box>
+          </Box>
             </TabPanel>
-            <TabPanel>
-            <Text>完了Todo</Text>
-            {completedTodos.map((todo) => (
+          <TabPanel width="1000px">
+          <Box bg="gray.100" borderRadius="20px" pb={60}>
+          <Box width="400px" m={10} >
+          <Flex justifyContent="center" alignItems="center">
+            <Text fontSize="2xl" fontWeight="bold" >完了Todo</Text>
+          </Flex>
+          {completedTodos.length > 0 ? (
+           completedTodos.map((todo) => (
             <CompletedTodoCard
             key={todo.id}
             id={todo.id}
@@ -208,7 +246,14 @@ function App(){
             onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
-          ))}
+          ))
+          ) : (
+          <Flex justifyContent="center" alignItems="center" height="300px">
+          <Text textAlign="center" fontSize="lg">完了したTodoがありません</Text>
+          </Flex>
+          )}
+          </Box>
+          </Box>
             </TabPanel>
             </TabPanels>
         </Tabs>
