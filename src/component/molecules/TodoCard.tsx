@@ -15,7 +15,7 @@ import {
 import { CompleteButton, DeleteButton, EditButton, } from '../atoms/Button';
 import { TodoCardProps } from '../../Type';
 
-export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDelete, onEdit, onComplete }) => {
+export const TodoCard: FC<TodoCardProps> = ({ id, title, content, formattedDate, onDelete, onEdit, onComplete }) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -53,8 +53,8 @@ export const TodoCard: FC<TodoCardProps> = ({ id, title, content, dateTime, onDe
         <Text mb={3} minHeight="100px">
           {content}
           </Text>
-          <Box>
-            完了予定日: {dateTime}
+            <Box>
+            完了予定日: {formattedDate}
             </Box>
             <Flex justify="flex-end" mt={3} gap={1}>
               <CompleteButton onClick={() => onComplete(id)}/>

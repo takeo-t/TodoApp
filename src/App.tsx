@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, ChakraProvider, Flex, Box, Text, useToast } from "@chakra-ui/react";
+import moment from "moment-timezone";
 
 import { InputTodo } from "./component/molecules/InputTodo";
 import { TodoCard } from "./component/molecules/TodoCard";
@@ -152,19 +153,26 @@ function App(){
             <Text fontSize="2xl" fontWeight="bold" color="white">未完了Todo</Text>
           </Flex>
           {incompleteTodos.length > 0 ? (
-            incompleteTodos.map((todo) => (
+            incompleteTodos.map((todo) => {
+            
+              const rawDate = todo.dateTime;
+              const formattedDate = moment(rawDate).format('YYYY年MM月DD日HH時mm分');
+              // console.log(formattedDate);
+            return(
             <TodoCard
              key={todo.id}
              id={todo.id}
              title={todo.title}
              content={todo.content}
              dateTime={todo.dateTime}
+             formattedDate={formattedDate}
              status={todo.status}
              onDelete={() => deleteTodo(todo.id)}
              onEdit={() => handleEdit(todo.id)}
              onComplete={() => handleComplete(todo.id)}
             />
-          ))
+          );
+            })
           ) : (
             <Flex justifyContent="center" alignItems="center" height="300px">
             <Text textAlign="center" fontSize="lg" color="white">Todoがありません</Text>
@@ -179,17 +187,24 @@ function App(){
             <Text fontSize="2xl" fontWeight="bold" >完了Todo</Text>
           </Flex>
           {completedTodos.length > 0 ? (
-           completedTodos.map((todo) => (
+           completedTodos.map((todo) => {
+
+            const momentDate = moment(`${todo.completedAt}Z`);
+            const jstCompletedAt = momentDate.tz('Asia/Tokyo').format('YYYY年MM月DD日 HH時mm分');
+            // console.log("Converted JST date:", jstCompletedAt);
+
+            return(
             <CompletedTodoCard
             key={todo.id}
             id={todo.id}
             title={todo.title}
             content={todo.content}
-            dateTime={todo.dateTime}
+            jstCompletedAt={jstCompletedAt}
             onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
-          ))
+            );
+          })
           ) : (
           <Flex justifyContent="center" alignItems="center" height="300px">
           <Text textAlign="center" fontSize="lg">完了したTodoがありません</Text>
@@ -208,19 +223,26 @@ function App(){
             <Text fontSize="2xl" fontWeight="bold" color="white">未完了Todo</Text>
           </Flex>
           {incompleteTodos.length > 0 ? (
-            incompleteTodos.map((todo) => (
+            incompleteTodos.map((todo) => {
+            
+              const rawDate = todo.dateTime;
+              const formattedDate = moment(rawDate).format('YYYY年MM月DD日HH時mm分');
+              // console.log(formattedDate);
+            return(
             <TodoCard
              key={todo.id}
              id={todo.id}
              title={todo.title}
              content={todo.content}
              dateTime={todo.dateTime}
+             formattedDate={formattedDate}
              status={todo.status}
              onDelete={() => deleteTodo(todo.id)}
              onEdit={() => handleEdit(todo.id)}
              onComplete={() => handleComplete(todo.id)}
             />
-          ))
+          );
+            })
           ) : (
             <Flex justifyContent="center" alignItems="center" height="300px">
             <Text textAlign="center" fontSize="lg" color="white">Todoがありません</Text>
@@ -236,17 +258,24 @@ function App(){
             <Text fontSize="2xl" fontWeight="bold" >完了Todo</Text>
           </Flex>
           {completedTodos.length > 0 ? (
-           completedTodos.map((todo) => (
+           completedTodos.map((todo) => {
+
+            const momentDate = moment(`${todo.completedAt}Z`);
+            const jstCompletedAt = momentDate.tz('Asia/Tokyo').format('YYYY年MM月DD日 HH時mm分');
+            // console.log("Converted JST date:", jstCompletedAt);
+
+            return(
             <CompletedTodoCard
             key={todo.id}
             id={todo.id}
             title={todo.title}
             content={todo.content}
-            dateTime={todo.dateTime}
+            jstCompletedAt={jstCompletedAt}
             onInComplete={() => handleInComplete(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             />
-          ))
+            );
+          })
           ) : (
           <Flex justifyContent="center" alignItems="center" height="300px">
           <Text textAlign="center" fontSize="lg">完了したTodoがありません</Text>

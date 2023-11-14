@@ -15,7 +15,7 @@ import {
 import { CompletedTodoCardProps } from '../../Type';
 import { DeleteButton,ReturnButton } from '../atoms/Button';
 
-export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, content, dateTime, onInComplete, onDelete }) => {
+export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, content, onInComplete, onDelete, jstCompletedAt }) => {
     const [isAlertOpen, setIsAlertOpen] = useState(false);
     const cancelRef = useRef<HTMLButtonElement>(null);
   
@@ -34,6 +34,7 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, conte
      });
     onClose();
     };
+
     return (
     <>
     <Box
@@ -49,9 +50,12 @@ export const CompletedTodoCard: FC<CompletedTodoCardProps> = ({ id, title, conte
           {title}
         </Text>
         <Divider mb={3}/>
-        <Text mb={3} minHeight="140px">
+        <Text mb={3} minHeight="100px">
           {content}
           </Text>
+          <Box>
+            完了日: {jstCompletedAt}
+            </Box>
           <Flex justify="flex-end" mt={3} gap={1}>
           <ReturnButton onClick={() => onInComplete(id)}/>
           <DeleteButton onClick={() => setIsAlertOpen(true)} />
