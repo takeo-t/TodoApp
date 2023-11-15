@@ -12,6 +12,8 @@
 ##### タブを選択することで全Todo,未完了Todo,完了Todoと表示を切り替えます。例として未完了Todoの表示状態を示します。  
 ![未完了Todo](images/TodoAppIncomplete.png)
 ##### タイトルと内容には入力文字数100文字以内の制限を設定しています。  
+![完了Todo](images/CompleteTodo.png)  
+##### Todoの完了ボタンを押すことで完了TodoコーナーへTodoが移動します。戻すボタンを押すと未完了Todoコーナーへ戻すことができます。
 
 # 4.依存関係
 プロジェクトの依存関係は`package.json`を参照してください。  
