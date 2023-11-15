@@ -31,7 +31,7 @@ npm start //ローカルサーバーの立上げ
 npm run build //プロジェクトをビルドする。 
 ```
 
-#　6.作者情報
+# 6.作者情報
 Taiki Takeo  
 E-mail takeo-t@118satellite.com  
 
