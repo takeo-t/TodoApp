@@ -31,7 +31,19 @@ npm start //ローカルサーバーの立上げ
 npm run build //プロジェクトをビルドする。 
 ```
 
-# 6.作者情報
+# 6. アプリケーションのホスト先
+ Microsoft Azure Static Web Appsにホストしています。
+`(https://proud-wave-053bcc300.4.azurestaticapps.net/)`
+
+# 7. 環境変数の設定方法について
+　ローカル開発環境では.envファイルに環境変数を設定しますが、GitHub ActionのCI/CD経由でアプリケーションをデプロイするときはGitHubのリポジトリ>Settings>Secrets and variables>Actionsでシークレット変数を設定し、.github/workflows/azure-static-web-apps-proud-wave-053bcc300.ymlファイル内でそのシークレット変数を呼び出します。
+```
+//.github/workflows/azure-static-web-apps-proud-wave-053bcc300.yml
+env:
+            REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+```
+
+# 8. 作者情報
 Taiki Takeo  
 E-mail takeo-t@118satellite.com  
 
