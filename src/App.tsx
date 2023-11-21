@@ -28,18 +28,18 @@ function App(){
       .catch(error => {
         console.error("Todoの取得に失敗しました。", error);
       });
-  }, []);
+    }, []);
       // console.log(incompleteTodos);
       // console.log(completedTodos);
 
-    const deleteTodo = async (id: number) => {
-      try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/TodoItems/${id}`);
-      setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
-      setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
-      }
-      catch (error) {
-        console.error("Todoの削除に失敗しました。", error);
+      const deleteTodo = async (id: number) => {
+        try {
+          await axios.delete(`${process.env.REACT_APP_API_URL}/api/TodoItems/${id}`);
+          setIncompleteTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+          setCompletedTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+        }
+        catch (error) {
+          console.error("Todoの削除に失敗しました。", error);
         }
       };
 
@@ -116,9 +116,9 @@ function App(){
       };
 
 
-    const handleEdit = (id: number) => {
-      setEditingTodoId(id);
-      setIsEditModalOpen(true);
+      const handleEdit = (id: number) => {
+        setEditingTodoId(id);
+        setIsEditModalOpen(true);
       }
 
 
