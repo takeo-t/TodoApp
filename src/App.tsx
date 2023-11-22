@@ -18,12 +18,13 @@ function App(){
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/api/TodoItems`)
-
       .then(response => {
-        const completed = response.data.filter((todo: TodoCardProps) => todo.status === 1);
-        const incomplete = response.data.filter((todo: TodoCardProps) => todo.status === 0);
+        const todos = response.data
+        const completed = todos.filter((todo: TodoCardProps) => todo.status === 1);
+        const incomplete = todos.filter((todo: TodoCardProps) => todo.status === 0);
         setCompletedTodos(completed);
         setIncompleteTodos(incomplete);
+        // console.log(todos);
       })
       .catch(error => {
         console.error("Todoの取得に失敗しました。", error);
