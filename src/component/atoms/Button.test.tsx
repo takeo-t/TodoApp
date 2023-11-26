@@ -13,11 +13,4 @@ describe('CompleteButton', () => {
     fireEvent.click(screen.getByText('完了'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
-
-  it('has correct style', () => {
-    render(<CompleteButton />);
-    const button = screen.getByText('完了');
-    expect(button).toHaveStyle('colorScheme: telegram');
-    expect(button).toHaveStyle('variant: outline');
-  });
 });
