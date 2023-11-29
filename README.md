@@ -46,7 +46,8 @@ npm run build //プロジェクトをビルドする。
 
 # 6. アプリケーションのホスト先
  Microsoft Azure Static Web Appsにホストしています。  
- [リンクはこちら](https://proud-wave-053bcc300.4.azurestaticapps.net "TodoApp")
+ [リンクはこちら](https://proud-wave-053bcc300.4.azurestaticapps.net "TodoApp")  
+ ※サーバーの立ち上げに30秒ほどの時間を要します。
 
 # 7. 環境変数の設定方法について
 　ローカル開発環境では.envファイルに環境変数を設定しますが、GitHub ActionのCI/CD経由でアプリケーションをデプロイするときはGitHubのリポジトリ>Settings>Secrets and variables>Actionsでシークレット変数を設定し、.github/workflows/azure-static-web-apps-proud-wave-053bcc300.ymlファイル内でそのシークレット変数を呼び出します。
