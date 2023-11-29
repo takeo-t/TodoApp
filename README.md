@@ -1,5 +1,5 @@
 # 1.プロジェクト名：TODO APP
-
+本プロジェクトはタスク管理アプリケーション（Todoアプリ）の一部を構成するものです。
 # 2.概要  
 ## 2-1. システム構成について  
 本アプリケーションはTodoアプリケーションのフロントエンド部分を担当します。  
@@ -43,7 +43,7 @@ npm run build //プロジェクトをビルドする。
 
 # 6. アプリケーションのホスト先
  Microsoft Azure Static Web Appsにホストしています。  
- `https://proud-wave-053bcc300.4.azurestaticapps.net`
+ [リンクはこちら](https://proud-wave-053bcc300.4.azurestaticapps.net "TodoApp")
 
 # 7. 環境変数の設定方法について
 　ローカル開発環境では.envファイルに環境変数を設定しますが、GitHub ActionのCI/CD経由でアプリケーションをデプロイするときはGitHubのリポジトリ>Settings>Secrets and variables>Actionsでシークレット変数を設定し、.github/workflows/azure-static-web-apps-proud-wave-053bcc300.ymlファイル内でそのシークレット変数を呼び出します。
@@ -52,8 +52,11 @@ npm run build //プロジェクトをビルドする。
 env:
     REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 ```
+# 8. 今後の課題
+・レスポンシブ未対応の現状なのでモバイルファーストの観点から対応する必要があります。  
+・各コンポーネントの重複したコードを見直し、共通化を図り可読性や保守性をより高める必要があります。（例えばEditTodoとInputTodoの共通化など）
 
-# 8. 作者情報
+# 9. 作者情報
 Taiki Takeo  
 E-mail takeo-t@118satellite.com  
 
