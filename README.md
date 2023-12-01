@@ -13,17 +13,17 @@
 
 # 3.画面構成
 ![画面構成](images/TodoAppLayout.png)  
-##### Todoを追加ボタンを押下することでTodo追加のモーダルが展開します。  
+##### ↑Todoを追加ボタンを押下することでTodo追加のモーダルが展開します。  
 ![モーダル](images/TodoAppModal.png)  
-##### タブを選択することで全Todo,未完了Todo,完了Todoと表示を切り替えます。例として未完了Todoの表示状態を示します。  
+##### ↑タブを選択することで全Todo,未完了Todo,完了Todoと表示を切り替えます。例として未完了Todoの表示状態を示します。  
 ![未完了Todo](images/TodoAppIncomplete.png)
-##### タイトルと内容には入力文字数100文字以内の制限を設定しています。  
+##### ↑タイトルと内容には入力文字数100文字以内の制限を設定しています。  
 ![Todo未入力時の処理](images/validation.png)
-##### Todoの内容に未入力事項がある場合、もしくは入力文字数が100文字を超えた場合はユーザーに警告を表示します。
+##### ↑Todoの内容に未入力事項がある場合、もしくは入力文字数が100文字を超えた場合はユーザーに警告を表示します。
 ![完了Todo](images/CompleteTodo.png)  
-##### Todoの完了ボタンを押すことで完了TodoコーナーへTodoが移動します。戻すボタンを押すと未完了Todoコーナーへ戻すことができます。  
+##### ↑Todoの完了ボタンを押すことで完了TodoコーナーへTodoが移動します。戻すボタンを押すと未完了Todoコーナーへ戻すことができます。  
 ![削除確認画面](images/DeleteModal.png)  
-##### Todoを削除する場合は確認画面が表示されます。  
+##### ↑Todoを削除する場合は確認画面が表示されます。  
 
 
 
@@ -33,7 +33,7 @@
 # 5.セットアップ手順
 npmのインストールを前提とします。
 ```
-npm install
+npm install //npm install
 ```
 ```
 git clone https://github.com/takeo-t/TodoApp.git //ローカルにセットアップ
