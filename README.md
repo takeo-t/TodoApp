@@ -33,7 +33,7 @@
 # 5.セットアップ手順
 npmのインストールを前提とします。
 ```
-npm install //npm install
+npm install //npmをインストール
 ```
 ```
 git clone https://github.com/takeo-t/TodoApp.git //ローカルにセットアップ
